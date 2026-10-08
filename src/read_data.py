@@ -16,3 +16,17 @@ print(biggest)
 avg_per_category = df.groupby("category")["amount"].mean()
 print("\nAverage spend per category:")
 print(avg_per_category)
+
+# Budget alerts
+budgets = pd.read_csv("data/budgets.csv")
+spend = df.groupby("category")["amount"].sum()
+
+print("\nBudget alerts:")
+for _, row in budgets.iterrows():
+    category = row["category"]
+    limit = row["budget"]
+    spent = spend.get(category, 0)
+    if spent > limit:
+        print(f"ALERT: {category} budget is {limit}, you spent {spent}")
+    else:
+        print(f"OK: {category} spent {spent} of {limit}")
