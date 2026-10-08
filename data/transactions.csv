@@ -1,0 +1,11 @@
+date,merchant,amount,category
+2026-09-01,Swiggy,450,Food
+2026-09-02,Uber,220,Travel
+2026-09-03,Amazon,1800,Shopping
+2026-09-05,Netflix,299,Subscription
+2026-09-07,Swiggy,380,Food
+2026-09-10,Electricity Bill,1500,Bills
+2026-09-12,Zomato,520,Food
+2026-09-15,Uber,180,Travel
+2026-09-18,Myntra,2400,Shopping
+2026-09-20,Swiggy,610,Food
