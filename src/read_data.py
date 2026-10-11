@@ -30,3 +30,13 @@ for _, row in budgets.iterrows():
         print(f"ALERT: {category} budget is {limit}, you spent {spent}")
     else:
         print(f"OK: {category} spent {spent} of {limit}")
+# Spike alert
+category_avg = df.groupby("category")["amount"].transform("mean")
+spikes = df[df["amount"] > 2 * category_avg]
+
+print("\nSpike alerts:")
+if spikes.empty:
+    print("No unusual spikes found.")
+else:
+    for _, row in spikes.iterrows():
+        print(f"ALERT: {row['category']} payment of {row['amount']} is more than 2x the usual {row['category']} average")
