@@ -40,3 +40,14 @@ if spikes.empty:
 else:
     for _, row in spikes.iterrows():
         print(f"ALERT: {row['category']} payment of {row['amount']} is more than 2x the usual {row['category']} average")
+
+# ---------- Subscription alerts ----------
+counts = df.groupby(["merchant", "amount"]).size()
+recurring = counts[counts >= 2]
+
+print("\nSubscription alerts:")
+if recurring.empty:
+    print("No recurring payments found.")
+else:
+    for (merchant, amount), times in recurring.items():
+        print(f"ALERT: You paid {merchant} {amount} {times} times. Is this a subscription you still need?")
