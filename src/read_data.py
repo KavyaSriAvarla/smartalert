@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("data/transactions.csv")
+df = pd.read_csv("data/transactions_large.csv")
 print(df)
 print()
 print("Total spent:", df["amount"].sum())
@@ -19,7 +19,10 @@ print(avg_per_category)
 
 # Budget alerts
 budgets = pd.read_csv("data/budgets.csv")
-spend = df.groupby("category")["amount"].sum()
+df["date"] = pd.to_datetime(df["date"])
+latest_month = df["date"].dt.to_period("M").max()
+this_month = df[df["date"].dt.to_period("M") == latest_month]
+spend = this_month.groupby("category")["amount"].sum()
 
 print("\nBudget alerts:")
 for _, row in budgets.iterrows():
@@ -42,7 +45,8 @@ else:
         print(f"ALERT: {row['category']} payment of {row['amount']} is more than 2x the usual {row['category']} average")
 
 # ---------- Subscription alerts ----------
-counts = df.groupby(["merchant", "amount"]).size()
+subs = df[df["category"] == "Subscription"]
+counts = subs.groupby(["merchant", "amount"]).size()
 recurring = counts[counts >= 2]
 
 print("\nSubscription alerts:")
